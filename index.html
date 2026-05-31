@@ -46,6 +46,7 @@ body { background: var(--cream); font-family: 'Lora', Georgia, serif; color: var
 .section-fence  { background: #dceefb; }
 .section-mid    { background: #e8f5e9; }
 .section-front  { background: #fce4ec; }
+.section-shade  { background: #e8ede4; }
 
 .plant-row { display: grid; grid-template-columns: 140px 1fr; border-bottom: 1px solid var(--brown-pale); }
 .plant-row:nth-child(odd)  { background: var(--cream-light); }
@@ -123,6 +124,7 @@ footer { background: var(--brown-dark); color: #d4b896; text-align: center; padd
   <button onclick="filter('fence',this)">🌿 Fence / Climbers</button>
   <button onclick="filter('mid',this)">🌸 Mid-Border</button>
   <button onclick="filter('front',this)">🌼 Front of Border</button>
+  <button onclick="filter('shade',this)">🌿 Shady Border</button>
 </nav>
 
 <div class="legend">
@@ -498,6 +500,54 @@ footer { background: var(--brown-dark); color: #d4b896; text-align: center; padd
     </div>
   </section>
       </div>
+
+  <section class="section" data-group="shade">
+    <div class="section-header section-shade">
+      <h2>Shady Border</h2><span>Partial to full shade — cool, moist spots; enrich soil with leaf mould or compost</span>
+    </div>
+    <div class="plant-row" data-rhs="114462/dryopteris-filix-mas" data-wiki="Dryopteris_filix-mas">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row">
+          <span class="plant-name">Dryopteris filix-mas</span>
+          <span class="plant-common">(Male Fern)</span>
+          <div class="plant-links">
+            <a href="https://en.wikipedia.org/wiki/Dryopteris_filix-mas" target="plant-info" class="plant-link">🌿 Wikipedia</a>
+            <a href="https://www.rhs.org.uk/plants/114462/dryopteris-filix-mas/details" target="plant-info" class="plant-link">🌸 RHS</a>
+            <a href="https://www.google.com/search?tbm=isch&q=Dryopteris+filix-mas+male+fern" target="plant-info" class="plant-link">🔍 Images</a>
+          </div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-shade">🌥️ Partial to full shade</span></div>
+        <p class="plant-desc">Britain's most tolerant and unfussy fern — a bold, upright shuttlecock of fresh mid-green lance-shaped fronds reaching up to 120cm. Robust, architectural and deeply at home in a cottage garden. Notably tolerant of dry shade, making it the most forgiving fern for free-draining soils.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">90–120cm × 90cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Semi-evergreen — fronds persist well into winter before dying back; fresh bright-green new growth unfurls in spring in a classic shuttlecock.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Enrich planting spot with leaf mould or compost and mulch annually to retain moisture — especially important on your free-draining soil. Water well in the first season. Remove tatty fronds in early spring before new growth emerges.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="13490/polystichum-setiferum" data-wiki="Polystichum_setiferum">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row">
+          <span class="plant-name">Polystichum setiferum</span>
+          <span class="plant-common">(Soft Shield Fern)</span>
+          <div class="plant-links">
+            <a href="https://en.wikipedia.org/wiki/Polystichum_setiferum" target="plant-info" class="plant-link">🌿 Wikipedia</a>
+            <a href="https://www.rhs.org.uk/plants/13490/polystichum-setiferum/details" target="plant-info" class="plant-link">🌸 RHS</a>
+            <a href="https://www.google.com/search?tbm=isch&q=Polystichum+setiferum+soft+shield+fern" target="plant-info" class="plant-link">🔍 Images</a>
+          </div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-shade">🌥️ Partial to full shade</span></div>
+        <p class="plant-desc">An elegant, evergreen fern with beautifully soft-textured, finely divided bright-green fronds in graceful arching rosettes to 90cm. RHS Award of Garden Merit. The fronds are finer and more feathery than the male fern, giving a lighter, lacier effect. An outstanding year-round foliage plant for shady spots.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 90cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Fully evergreen — fresh green fronds persist all winter and remain ornamental even in hard frosts, providing structure when little else does.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Enrich the planting spot with leaf mould or compost and mulch generously each autumn — critical on free-draining soil. Water regularly in dry spells. Protect crowns from excessive winter wet. Remove old fronds in early spring before new growth appears.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <footer>
   Note: <em>Digitalis</em> (foxglove) is biennial but self-seeds so freely it is effectively a permanent fixture.
