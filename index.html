@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>York Cottage Garden Planting Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #f7f0e6; --cream-mid: #efe6d8; --cream-light: #fdfaf6;
+  --brown-dark: #3d2b1f; --brown-mid: #6b4226; --brown: #8b6343;
+  --brown-light: #c9a97a; --brown-pale: #e8dfd0;
+  --text-dark: #2c1a0e; --text-mid: #4a3526; --text-light: #7a5c3a; --text-label: #9e7a56;
+}
+body { background: var(--cream); font-family: 'Lora', Georgia, serif; color: var(--text-dark); }
+
+.header { background: linear-gradient(135deg, #3d2b1f 0%, #6b4226 50%, #8b6343 100%); padding: 32px 24px 26px; text-align: center; position: relative; overflow: hidden; }
+.header::before { content: ''; position: absolute; inset: 0; opacity: 0.07; background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 24px 24px; }
+.header-inner { position: relative; }
+.header-emoji { font-size: 2rem; margin-bottom: 8px; }
+.header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 700; color: #fdf6ee; margin-bottom: 6px; }
+.header p { font-size: 0.85rem; color: #d4b896; font-style: italic; }
+
+.nav { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 20px; background: var(--cream-mid); border-bottom: 2px solid var(--brown-light); position: sticky; top: 0; z-index: 10; }
+.nav button { padding: 6px 18px; border-radius: 20px; border: 2px solid var(--brown-light); background: transparent; color: var(--brown-mid); font-family: 'Lora', Georgia, serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.nav button:hover { background: #ddd0be; }
+.nav button.active { background: var(--brown-mid); border-color: var(--brown-mid); color: #fdf6ee; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; padding: 10px 20px; background: #fdf6ee; border-bottom: 1px solid var(--brown-pale); font-size: 0.7rem; align-items: center; }
+.badge { display: inline-flex; align-items: center; gap: 4px; border-radius: 20px; padding: 2px 10px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
+.badge-perennial { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+.badge-climber    { background: #e3f2fd; color: #0d47a1; border-color: #90caf9; }
+.badge-shortlived { background: #fff8e1; color: #e65100; border-color: #ffcc80; }
+.badge-biennial   { background: #fce4ec; color: #880e4f; border-color: #f48fb1; }
+.badge-sun-full   { background: #fffde7; color: #f57f17; }
+.badge-sun-part   { background: #fff9c4; color: #f9a825; }
+.badge-sun-both   { background: #ede7f6; color: #4527a0; }
+.badge-sun-shade  { background: #e8eaf6; color: #283593; }
+.legend-sun-key   { color: var(--text-label); font-size: 0.7rem; }
+
+.section-header { padding: 14px 20px; border-top: 3px solid var(--brown); display: flex; align-items: baseline; gap: 12px; }
+.section-header h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); }
+.section-header span { font-size: 0.78rem; color: var(--text-light); font-style: italic; }
+.section-fence  { background: #dceefb; }
+.section-mid    { background: #e8f5e9; }
+.section-front  { background: #fce4ec; }
+
+.plant-row { display: grid; grid-template-columns: 140px 1fr; border-bottom: 1px solid var(--brown-pale); }
+.plant-row:nth-child(odd)  { background: var(--cream-light); }
+.plant-row:nth-child(even) { background: #fff7f0; }
+
+.plant-img-wrap { width: 140px; min-height: 130px; overflow: hidden; background: linear-gradient(135deg, var(--brown-pale), #d4c5b0); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+.plant-img-wrap img { width: 100%; height: 100%; min-height: 130px; object-fit: cover; display: block; }
+.img-spinner { width: 24px; height: 24px; border-radius: 50%; border: 3px solid var(--brown-light); border-top-color: transparent; animation: spin 0.8s linear infinite; }
+.img-fallback { font-size: 2.5rem; opacity: 0.25; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.plant-info { padding: 12px 18px; display: flex; flex-direction: column; gap: 6px; }
+.plant-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: space-between; }
+.plant-name { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; font-weight: 700; font-style: italic; color: var(--text-dark); }
+.plant-common { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
+.badges-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.plant-desc { font-size: 0.81rem; color: var(--text-mid); line-height: 1.58; }
+.plant-details { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 4px 16px; margin-top: 2px; }
+.detail-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-label); }
+.detail-val { font-size: 0.77rem; color: var(--text-mid); line-height: 1.45; }
+
+.section + .section { margin-top: 24px; }
+.section.hidden { display: none; }
+.main { max-width: 940px; margin: 0 auto; padding-bottom: 48px; }
+
+footer { background: var(--brown-dark); color: #d4b896; text-align: center; padding: 18px 24px; font-size: 0.77rem; font-style: italic; line-height: 1.6; }
+
+@media (max-width: 520px) {
+  .plant-row { grid-template-columns: 90px 1fr; }
+  .plant-img-wrap { width: 90px; }
+  .plant-title-row { flex-direction: column; align-items: flex-start; }
+  .plant-links { margin-left: 0; }
+}
+
+.plant-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.plant-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-family: 'Lora', Georgia, serif;
+  text-decoration: none;
+  border: 1px solid;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.plant-link:hover { opacity: 0.75; }
+.plant-link[href*="wikipedia"] { background: #f8f4e8; color: #6b4226; border-color: #c9a97a; }
+.plant-link[href*="rhs.org"]   { background: #e8f0e8; color: #2d5a27; border-color: #8fbc8f; }
+.plant-link[href*="google"]    { background: #e8eaf6; color: #283593; border-color: #9fa8da; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-emoji">🌿 🌸 🌼</div>
+    <h1>York Cottage Garden Planting Guide</h1>
+    <p>SW &amp; SE-facing walls &nbsp;·&nbsp; Free-draining fertile soil &nbsp;·&nbsp; Informal cottage style</p>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="active" onclick="filter('all',this)">All Plants</button>
+  <button onclick="filter('fence',this)">🌿 Fence / Climbers</button>
+  <button onclick="filter('mid',this)">🌸 Mid-Border</button>
+  <button onclick="filter('front',this)">🌼 Front of Border</button>
+</nav>
+
+<div class="legend">
+  <span class="badge badge-perennial">Perennial</span>
+  <span class="badge badge-climber">Perennial climber</span>
+  <span class="badge badge-shortlived">Perennial (short-lived)</span>
+  <span class="badge badge-biennial">Biennial (self-seeds)</span>
+  <span class="legend-sun-key">☀️ Full sun &nbsp;🌤️ Sun/partial &nbsp;⛅ Sun to shade &nbsp;🌥️ Partial/full shade</span>
+</div>
+
+<div class="main">
+
+  <section class="section" data-group="fence">
+    <div class="section-header section-fence">
+      <h2>Fence &amp; Wall Climbers</h2><span>Self-clinging or wall-trained — SW &amp; SE-facing walls &amp; fences</span>
+    </div>
+    <div class="plant-row" data-rhs="52716/clematis-warszawska-nike-(el)" data-wiki="Clematis">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Clematis 'Warszawska Nike'</span><span class="plant-common">(Clematis)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Clematis_%27Warszawska_Nike%27" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/52716/clematis-warszawska-nike-(el)/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Clematis+Warszawska+Nike" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-climber">Perennial climber</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Rich velvety deep purple flowers from July–October. Deciduous climber, self-supporting with tendrils. Large blooms up to 18cm across with contrasting golden stamens. RHS Award of Garden Merit.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">2.5–3m × 1–1.5m</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Bare in winter. Fresh green foliage from April. Flowers July–Oct. Fluffy seedheads into autumn.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Cut back to 30cm in late February (Group 3). Mulch base. Keep roots shaded.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="126246/i-rosa-i-danse-du-feu-(clf)" data-wiki="Rosa_%27Danse_du_Feu%27" data-src="https://apps.rhs.org.uk/plantselectorimages/detail/WSY0034776_1695.jpg">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Rosa 'Danse du Feu'</span><span class="plant-common">(Climbing Rose)</span>
+          <div class="plant-links"><a href="https://www.rhs.org.uk/plants/126246/i-rosa-i-danse-du-feu-(clf)/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Rosa+Danse+du+Feu+climbing+rose" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-climber">Perennial climber</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Clusters of double, rich orange-scarlet blooms from June with excellent repeat flowering. One of the best climbing roses for a north-facing or partially shaded fence. Vigorous and disease-resistant.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">3–4m × 2m</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Bare in winter. Red-tinted foliage in spring. Flowers June–Oct. Semi-evergreen in mild winters.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Moderate. Tie in new shoots. Prune lightly after each flush; harder in late winter. Feed in spring.</span></div>
+        </div>
+      </div>
+      </div>
+    <div class="plant-row" data-rhs="10655/lonicera-periclymenum-serotina" data-wiki="Lonicera_periclymenum">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Lonicera periclymenum 'Serotina'</span><span class="plant-common">(Late Dutch Honeysuckle)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Lonicera_periclymenum" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/10655/lonicera-periclymenum-serotina/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Lonicera+periclymenum+Serotina+honeysuckle" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-climber">Perennial climber</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Intensely fragrant purple-red and cream flowers from July to October — later than most honeysuckles. Glossy red berries follow, loved by birds. Perfect for an informal cottage garden.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">4–6m × 2–3m</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Semi-evergreen in mild winters. Flowers Jul–Oct. Red berries persist into winter for wildlife.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low. Cut back by a third after flowering. Can cut hard if congested. Mulch roots to keep cool.</span></div>
+        </div>
+      </div>
+      </div>
+
+    <div class="plant-row" data-rhs="19126/wisteria-sinensis" data-wiki="Wisteria_sinensis">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Wisteria sinensis</span><span class="plant-common">(Chinese Wisteria)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Wisteria_sinensis" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/19126/wisteria-sinensis/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Wisteria+sinensis" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-climber">Perennial climber</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">One of the most spectacular garden plants possible. Cascading racemes of intensely fragrant lilac-blue flowers smother the plant in May before leaves appear — breathtaking on a warm SW or SE wall. Long-lived and vigorous once established.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">Up to 9m × 6m</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Bare in winter with attractive twisting stems. Flowers spectacularly in May before leaves. Handsome pinnate foliage all summer. Some yellow autumn colour.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Moderate. Prune twice a year — July (cut new shoots to 5 leaves) and Feb (cut same shoots to 2–3 buds). Needs strong support.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plant-row" data-rhs="96406/fremontodendron-california-glory" data-wiki="Fremontodendron_californicum">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Fremontodendron 'California Glory'</span><span class="plant-common">(Flannel Bush)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Fremontodendron_californicum" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/96406/fremontodendron-california-glory/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Fremontodendron+California+Glory" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-climber">Perennial wall shrub</span><span class="badge badge-sun-full">☀️ Full sun (wall)</span></div>
+        <p class="plant-desc">An outstanding wall shrub for a warm SW or SE-facing aspect, smothered in large, brilliant golden-yellow flowers from May to October. Fast-growing evergreen with lobed grey-green felted leaves. Thrives on poor, dry soil once established. RHS AGM.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">4–6m × 3–4m</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Evergreen — lobed grey-green leaves all year. Prolific golden-yellow flowers May–October. Spectacular summer wall coverage.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low once established. Tie in to wall wires. Trim lightly after flowering. Excellent drainage essential — avoid wet or clay soils. Not for very cold exposed sites.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section" data-group="mid">
+    <div class="section-header section-mid">
+      <h2>Mid-Border Perennials</h2><span>60–150cm · structural backbone with long seasons of interest</span>
+    </div>
+    <div class="plant-row" data-rhs="333040/persicaria-amplexicaulis-firetail" data-wiki="Persicaria_amplexicaulis">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Persicaria amplexicaulis 'Firetail'</span><span class="plant-common">(Red Bistort)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Persicaria_amplexicaulis" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/333040/persicaria-amplexicaulis-firetail/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Persicaria+amplexicaulis+Firetail" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Slender crimson-red poker spikes from July right through to October — one of the longest seasons of any perennial. Large heart-shaped leaves form impressive weed-suppressing clumps. Very hardy and reliable in Yorkshire.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">90–120cm × 90cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Bare in winter. Big fresh green foliage from April. Flowers Jul–Oct without pause.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Cut back in autumn or spring. Divide if overcrowded after many years.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="41568/echinacea-purpurea" data-wiki="Echinacea_purpurea">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Echinacea purpurea</span><span class="plant-common">(Purple Coneflower)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Echinacea_purpurea" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/41568/echinacea-purpurea/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Echinacea+purpurea" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-part">🌤️ Full sun to partial shade</span></div>
+        <p class="plant-desc">Bold daisy flowers with reflexed rosy-purple petals and prominent spiky orange-brown cones. Long flowering season July–September. Spiky seedheads persist through winter, feeding goldfinches.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 45cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Nothing in winter. Dark green rough foliage from spring. Flowers Jul–Sept. Seedheads last into winter if left.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low. Leave some seedheads for winter interest and wildlife. Divide every 3–4 years. Needs good drainage.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="1764/astrantia-major" data-wiki="Astrantia_major">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Astrantia major 'Venice'</span><span class="plant-common">(Masterwort)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Astrantia_major" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/1764/astrantia-major/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Astrantia+major+Venice" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Intricate pincushion flowers in deep burgundy-pink, surrounded by papery star-shaped bracts. Flowers June–August with a good second flush if cut back. Wonderful cut flower. Ideal for your garden.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 45cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Fully herbaceous. Attractive divided foliage from spring. Flowers June onwards. Bare in winter.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low. Mulch well on free-draining soil. Divide every few years. Cut back after first flush for repeat flowers.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="368046/penstemon-blackbird" data-wiki="Penstemon">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Penstemon 'Blackbird'</span><span class="plant-common">(Penstemon)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Penstemon" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/368046/penstemon-blackbird/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Penstemon+Blackbird" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-part">🌤️ Full sun to partial shade</span></div>
+        <p class="plant-desc">Deep purple-black tubular flowers from June to October — one of the most generous-flowering border perennials. 'Sour Grapes', 'Blackbird' and 'Raven' offer superb rich dark tones for a cottage palette.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 45–60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Semi-evergreen — holds narrow leaves in mild winters. Flowers Jun–Oct. York winters may cut back to base.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low-moderate. Cut back in spring not autumn (old stems protect against frost). Take cuttings in late summer.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="97879/salvia-nemorosa-caradonna" data-wiki="Salvia_nemorosa">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Salvia nemorosa 'Caradonna'</span><span class="plant-common">(Ornamental Sage)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Salvia_nemorosa" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/97879/salvia-nemorosa-caradonna/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Salvia+nemorosa+Caradonna" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">Upright architectural spikes of violet-blue flowers on near-black stems from May–July, with a strong second flush if cut back. Highly attractive to bees. Aromatic grey-green foliage. Superb vertical accent.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–80cm × 40cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Low aromatic foliage rosette over winter. Upright stems from May. Flowers May–Jul, again Sept if cut back hard.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Cut back by half after first flowering for a second flush. Excellent drainage essential.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="366158/hylotelephium-herbstfreude-(-autumn-joy-)" data-wiki="Hylotelephium_telephium">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Sedum 'Herbstfreude' (Autumn Joy)</span><span class="plant-common">(Stonecrop)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Hylotelephium_telephium" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/366158/hylotelephium-herbstfreude-(-autumn-joy-)/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Sedum+Herbstfreude+Autumn+Joy" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">Thick fleshy blue-grey succulent leaves from spring. Flat-topped heads emerge pink in August, deepen to brick-red in Sept–Oct, then coppery-brown seedheads through winter — beautiful when frosted. Superb for late pollinators.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">45–60cm × 45–60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Attractive blue-grey foliage from April. Flowers Aug–Oct deepening in colour. Frosted seedheads persist all winter.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Thrives in free-draining soil — ideal for your garden. Cut back in spring. Divide every 3–4 years.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="1365/aquilegia-vulgaris" data-wiki="Aquilegia_vulgaris">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Aquilegia vulgaris</span><span class="plant-common">(Columbine / Granny's Bonnet)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Aquilegia_vulgaris" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/1365/aquilegia-vulgaris/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Aquilegia+vulgaris+columbine" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Quintessential cottage garden flower. Nodding spurred blooms in purples, blues, pinks and white in May–June. Self-seeds and hybridises freely, creating ever-changing combinations. Perfectly informal and utterly charming.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 45cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Attractive glaucous-green lobed foliage much of the year. Flowers May–June. Self-seeds prolifically thereafter.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Allow to self-seed for a naturalistic effect. Individual plants short-lived but perpetuate freely.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="91464/erysimum-bowles-s-mauve" data-wiki="Erysimum" data-src="">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Erysimum 'Bowles's Mauve'</span><span class="plant-common">(Perennial Wallflower)</span>
+          <div class="plant-links"><a href="https://www.rhs.org.uk/plants/91464/erysimum-bowles-s-mauve/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Erysimum+Bowles+Mauve+wallflower" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-shortlived">Perennial (short-lived)</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">Rich mauve-purple flowers almost continuously from February through to June and beyond. Neat mounded habit with narrow grey-green leaves. Fantastically early for pollinators when little else is flowering in a cold York February.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">45–60cm × 60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Evergreen — holds grey-green foliage all winter. Flowers can begin as early as February and continue for months.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low, but short-lived (3–4 years). Take cuttings in late summer. Trim after flowering; avoid cutting into old wood.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="5882/digitalis-purpurea" data-wiki="Digitalis_purpurea">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Digitalis purpurea</span><span class="plant-common">(Foxglove)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Digitalis_purpurea" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/5882/digitalis-purpurea/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Digitalis+purpurea+foxglove" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-biennial">Biennial (self-seeds)</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Tall stately spires of tubular flowers in purples, pinks, creams and white with intricate spotted throats in June–July. Biennial but self-seeds so prolifically it behaves as a permanent fixture. Thrives in light shade — perfect for your garden.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">100–150cm × 30–60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Large soft grey-green rosettes in year one. Flower spikes June–July year two. Self-seeds thereafter.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low — just let it self-seed freely. Edit out seedlings where not wanted.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-group="front">
+    <div class="section-header section-front">
+      <h2>Front of Border Perennials</h2><span>30–60cm · edging, ground cover and low mounds</span>
+    </div>
+    <div class="plant-row" data-rhs="153768/geranium-rozanne-(-gerwat-pbr)" data-wiki="Geranium_wallichianum" data-src="https://apps.rhs.org.uk/plantselectorimages/detail/WSYD0005037_4832.jpg">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Geranium 'Rozanne'</span><span class="plant-common">(Hardy Cranesbill)</span>
+          <div class="plant-links"><a href="https://www.rhs.org.uk/plants/153768/geranium-rozanne-(-gerwat-pbr)/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Geranium+Rozanne" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">A true workhorse. Violet-blue saucer flowers with white centres from June right through to first frosts — an exceptional season. Deeply divided fresh green foliage mounds and scrambles attractively through neighbours.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">40cm × 60–90cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Dies back completely in winter. Fresh green leaves from April. Flowers June–October without pause.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Almost none. Cut back hard in midsummer if tatty for a fresh flush. Divide every few years. Very hardy.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="573/alchemilla-mollis" data-wiki="Alchemilla_mollis">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Alchemilla mollis</span><span class="plant-common">(Lady's Mantle)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Alchemilla_mollis" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/573/alchemilla-mollis/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Alchemilla+mollis+lady%27s+mantle" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-shade">🌥️ Sun to full shade</span></div>
+        <p class="plant-desc">Soft, velvety, lime-green leaves catch water droplets beautifully. Frothy sprays of chartreuse-yellow flowers from May to July, blending with almost everything. A superb edging plant for cottage borders.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">30–40cm × 50–60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Semi-evergreen. Fresh pleated leaves unfurl in spring. Flowers June onwards. Deadhead to limit self-seeding.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Cut back hard after flowering. Self-seeds generously. Tolerates deep partial shade.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="11714/nepeta-x-faassenii" data-wiki="Nepeta_%C3%97_faassenii">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Nepeta × faassenii 'Six Hills Giant'</span><span class="plant-common">(Catmint)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Nepeta_%C3%97_faassenii" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/11714/nepeta-x-faassenii/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Nepeta+faassenii+Six+Hills+Giant+catmint" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">Soft aromatic grey-green foliage with masses of lavender-blue flower spikes from May to September. Wonderful hazy, billowing effect at border edges. Loved by bees. Very fragrant when brushed.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">45–60cm × 60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Semi-evergreen grey mounds persist in mild winters. Cut back hard in March. Flowers from late May through September.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Cut back by half after first flush for a strong second flush. Excellent drainage essential.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="9005/heuchera-palace-purple" data-wiki="Heuchera">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Heuchera 'Palace Purple'</span><span class="plant-common">(Coral Bells)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Heuchera" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/9005/heuchera-palace-purple/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Heuchera+Palace+Purple" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-shade">🌥️ Partial shade (best colour)</span></div>
+        <p class="plant-desc">Evergreen foliage in deep burgundy, caramel, lime-green or silver — invaluable for year-round colour and texture. Delicate wiry stems carry small bell flowers in summer. Fantastic contrast plant.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">30–40cm × 40–50cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Evergreen — colour and structure all winter. Foliage flushes brighter in spring. Flowers June–August are a bonus.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Low. Remove old tired leaves in spring. Lift and replant every 3–4 years as crowns become woody and raised.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="17672/stachys-byzantina" data-wiki="Stachys_byzantina">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Stachys byzantina</span><span class="plant-common">(Lamb's Ears)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Stachys_byzantina" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/17672/stachys-byzantina/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Stachys+byzantina+lamb%27s+ears" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-full">☀️ Full sun</span></div>
+        <p class="plant-desc">Unmistakeable thick, densely woolly silver-white leaves — wonderful textural contrast to everything around it. Softly felted purple-pink flower spikes appear in summer. 'Silver Carpet' is a non-flowering foliage-only form.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">30–45cm × 60cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Largely evergreen — silver rosettes through winter though may look tatty after hard frosts. Flowers June–July.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Excellent drainage essential — your free-draining soil is perfect. Remove spent leaves in spring.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plant-row" data-rhs="3001/campanula-persicifolia" data-wiki="Campanula_persicifolia">
+      <div class="plant-img-wrap"><div class="img-spinner"></div></div>
+      <div class="plant-info">
+        <div class="plant-title-row"><span class="plant-name">Campanula persicifolia</span><span class="plant-common">(Peach-leaved Bellflower)</span>
+          <div class="plant-links"><a href="https://en.wikipedia.org/wiki/Campanula_persicifolia" target="plant-info" class="plant-link">🌿 Wikipedia</a><a href="https://www.rhs.org.uk/plants/3001/campanula-persicifolia/details" target="plant-info" class="plant-link">🌸 RHS</a><a href="https://www.google.com/search?tbm=isch&q=Campanula+persicifolia+bellflower" target="plant-info" class="plant-link">🔍 Images</a></div>
+        </div>
+        <div class="badges-row"><span class="badge badge-perennial">Perennial</span><span class="badge badge-sun-both">⛅ Sun to partial shade</span></div>
+        <p class="plant-desc">Slender upright stems carrying open cup-shaped flowers of clear blue or white from June to August. Delicate and graceful, naturalising beautifully in informal borders. Plant the blue and white forms together for a lovely effect.</p>
+        <div class="plant-details">
+          <div><span class="detail-label">Height × Spread </span><span class="detail-val">60–90cm × 30cm</span></div>
+          <div><span class="detail-label">Year-round </span><span class="detail-val">Low rosettes of narrow evergreen leaves through winter. Flower stems rise June–August. Self-seeds gently.</span></div>
+          <div><span class="detail-label">Care </span><span class="detail-val">Very low. Deadhead to prolong flowering. Divide every few years. Tolerates partial shade well.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+      </div>
+
+<footer>
+  Note: <em>Digitalis</em> (foxglove) is biennial but self-seeds so freely it is effectively a permanent fixture.
+  <em>Erysimum</em> is short-lived (3–4 yrs) but easily replaced from cuttings. All other plants are true long-lived perennials or climbers. Your SW/SE-facing walls are ideal for Wisteria and Fremontodendron — take full advantage! &nbsp;🌿
+  <br>Images © RHS / respective photographers, sourced via Wikipedia.
+</footer>
+
+<script>
+// Two-source image loading strategy:
+// 1. Try RHS plant page — fetch HTML, extract og:image (direct JPEG, no hotlink restrictions)  
+// 2. Fall back to Wikipedia REST API summary thumbnail
+// Both run in the browser where CORS is allowed.
+
+async function getRHSImage(rhsPath) {
+  const url = `https://www.rhs.org.uk/plants/${rhsPath}/details`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('RHS fetch failed');
+  const html = await res.text();
+  const match = html.match(/og:image[^>]*content="(https:\/\/apps\.rhs\.org\.uk\/plantselector[^"]+)"/);
+  if (!match) throw new Error('No RHS image found');
+  return match[1];
+}
+
+async function getWikiImage(wikiTitle) {
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${wikiTitle}`;
+  const res = await fetch(url, { headers: { 'Api-User-Agent': 'CottageGardenGuide/1.0' } });
+  if (!res.ok) throw new Error('Wiki fetch failed');
+  const data = await res.json();
+  const src = data?.thumbnail?.source || data?.originalimage?.source;
+  if (!src) throw new Error('No wiki image');
+  return src;
+}
+
+async function loadImage(wrap, rhsPath, wikiTitle, hardcodedSrc) {
+  const spinner = wrap.querySelector('.img-spinner');
+  let imgSrc = null;
+
+  // Use hardcoded src if provided
+  if (hardcodedSrc) {
+    imgSrc = hardcodedSrc;
+  } else {
+    // Try RHS first
+    try { imgSrc = await getRHSImage(rhsPath); } catch(e) {}
+
+    // Fall back to Wikipedia
+    if (!imgSrc) {
+      try { imgSrc = await getWikiImage(wikiTitle); } catch(e) {}
+    }
+  }
+
+  if (spinner) spinner.remove();
+
+  if (imgSrc) {
+    const img = document.createElement('img');
+    img.alt = wikiTitle.replace(/_/g,' ');
+    img.src = imgSrc;
+    img.onerror = () => {
+      img.remove();
+      const fb = document.createElement('div');
+      fb.className = 'img-fallback';
+      fb.textContent = '🌿';
+      wrap.appendChild(fb);
+    };
+    wrap.appendChild(img);
+  } else {
+    const fb = document.createElement('div');
+    fb.className = 'img-fallback';
+    fb.textContent = '🌿';
+    wrap.appendChild(fb);
+  }
+}
+
+document.querySelectorAll('.plant-row[data-rhs]').forEach(row => {
+  loadImage(
+    row.querySelector('.plant-img-wrap'),
+    row.dataset.rhs,
+    row.dataset.wiki,
+    row.dataset.src || ''
+  );
+});
+
+function filter(group, btn) {
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.toggle('hidden', group !== 'all' && s.dataset.group !== group);
+  });
+}
+</script>
+</body>
+</html>
